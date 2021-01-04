@@ -25,6 +25,7 @@ const weekDays = [
 ];
 
 // Add AJAX functions here:
+// Connects to Foursquare API
 const getVenues = async () => {
   const city = $input.val();
   const urlToFetch = `${url}${city}&limit=10&client_id=${clientId}&client_secret=${clientSecret}&v=20210104`;
@@ -49,7 +50,21 @@ const getVenues = async () => {
   }
 };
 
-const getForecast = () => {};
+// Connects to OpenWeather API
+const getForecast = async () => {
+  const urlToFetch = `${weatherUrl}?&q=${$input.val()}&APPID=${openWeatherKey}`;
+
+  try {
+    const response = await fetch(urlToFetch);
+    if (response.ok) {
+      const jsonResponse = await response.json();
+      console.log(jsonResponse);
+      return jsonResponse;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 // Render functions
 const renderVenues = (venues) => {
