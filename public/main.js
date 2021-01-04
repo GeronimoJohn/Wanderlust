@@ -32,9 +32,17 @@ const getVenues = async () => {
   try {
     const response = await fetch(urlToFetch);
     if (response.ok) {
-      const jsonResponse = response.json();
+      // this gets the data from foursquare in the JSON format
+      const jsonResponse = await response.json();
       console.log(jsonResponse);
-      const venues = jsonResponse.response.groups[0].items;
+
+      // sets the venue data from the json response variable to venues
+      const venues = jsonResponse.response.groups[0].items.map(
+        (item) => item.venue
+      );
+      console.log(venues);
+
+      return venues;
     }
   } catch (error) {
     console.log(error);
